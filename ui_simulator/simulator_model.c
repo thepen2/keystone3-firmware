@@ -37,9 +37,10 @@ void StopQrDecode(void)
 {
 }
 
-void ClearUSBRequestId(void)
-{
-}
+// COMMENTED OUT BY PEN
+// void ClearUSBRequestId(void)
+// {
+// }
 
 void MpuSetProtection(bool en)
 {
@@ -143,18 +144,19 @@ bool UsbInitState(void)
     return true;
 }
 
-uint8_t GetExportWallet()
-{
-    return 1;
-}
+// THREE PLACEHOLDER FUNCTIONS COMMENTED OUT BY PEN
+// uint8_t GetExportWallet()
+// {
+//    return 1;
+// }
 
-void ExportAddressReject()
-{
-}
+// void ExportAddressReject()
+// {
+// }
 
-void ExportAddressApprove()
-{
-}
+// void ExportAddressApprove()
+// {
+// }
 
 bool FatfsFileExist(const char *path)
 {
@@ -189,15 +191,16 @@ void FpSaveKeyInfo(bool add)
 {
 }
 
-uint16_t GetCurrentUSParsingRequestID()
-{
-    return 0xFFFF;
-}
+// BOTH COMMENTED OUT BY PEN
+// uint16_t GetCurrentUSParsingRequestID()
+// {
+//    return 0xFFFF;
+// }
 
 #ifndef BTC_ONLY
-void HandleURResultViaUSBFunc(const void *data, uint32_t data_len, uint16_t requestID, StatusEnum status)
-{
-}
+// void HandleURResultViaUSBFunc(const void *data, uint32_t data_len, uint16_t requestID, StatusEnum status)
+// {
+// }
 #endif
 
 uint32_t GetBatteryMilliVolt(void)
