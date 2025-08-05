@@ -83,5 +83,5 @@ struct ProtocolParser* NewEApduProtocolParser();
 void SendEApduResponse(EAPDUResponsePayload_t *payload);
 void GotoResultPage(EAPDUResultPage_t *resultPageParams);
 void SendEApduResponseError(uint8_t cla, CommandType ins, uint16_t requestID, StatusEnum status, char *error);
-
+void EApduRequestHandler(EAPDURequestPayload_t *request);  // MISSING DECLARATION ADDED BY PEN
 #endif
