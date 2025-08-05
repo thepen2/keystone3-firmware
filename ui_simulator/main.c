@@ -107,7 +107,7 @@ void ReceiveVirtualUSB(int thisSocket) {
     uint8_t thisLen = 0;
 
   GET_MORE_DATA:
-    thisLen - recv(thisSocket, packetBuffer, 64, 0);
+    thisLen = recv(thisSocket, packetBuffer, 64, 0);
 
     if (thisLen > 0) {
         thisCLA = packetBuffer[0];
