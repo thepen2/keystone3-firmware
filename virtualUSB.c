@@ -123,7 +123,7 @@ int main() {
     char keystonePacket[64];
     
     // TEST OF INFO REQUEST (INS = 5)
-    keystonePacket[0] = 0x00;  // EAPDUY CLA
+    keystonePacket[0] = 0x00;  // EAPDU CLA
     
     keystonePacket[1] = 0x00;  // INFO REQUEST
     keystonePacket[2] = 0x05;
