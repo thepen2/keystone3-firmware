@@ -1,5 +1,19 @@
 # Keystone3 Firmware
 
+## Virtual USB Handler Add On
+
+This fork implements a virtual USB function for the Keystone3 simulator, which currently does not support USB messages.
+
+Instead, we create a listening thread on startup so that USB packets can be send by HTTP instead, setting the simulator up to act as server on port 81.  On receipt the packets are compile into the existing EADPURequestPayload_t format structures and passed through to the existing message handers.  The USB packets of the responses are then returned by HTTP to the original sender.
+
+Most of the additional code has been added to the main.c (ui_simulator version) and eapdu_protocol_parser.c.  There is a sample C source file virtualUSB.c in the root directory that can be compiled as a command line program in the usual way, and as annotated in the new program file.  This working code can then be added to your own crypto application to communicate with the Keystone3 simulator.  You simply need to parse your message into EAPDU packets and send them by HTTP instead.  Packets received back are compiled back into a response data buffer.
+
+The pretty part of this solution is that it is any computer running your crypto app can exchange such messages with a Keystone3 Simulator regardless of operating system, or can be run in separate terminal windows on the same computer.  Be aware that you may need to enable port forwarding and/or make sure the socket traffic is not blocked by a firewall.  The choice of port 81 is arbitrary.  Any other port could be used if the number is inserted both in the main.c file and the virtualUSB.c file.
+
+In addition we have applied some additonal fixes that seemed to be causing problems in the compile.  To find them all, search for the words "BY PEN" in the archive.  
+
+
+
 ## Description
 
 The Keystone3 Firmware is an advanced, highly secure software specifically crafted for the Keystone3 product, a state-of-the-art crypto hardware wallet. This project is laser-focused on delivering an exceptionally secure and intuitive user experience. It boasts cutting-edge features like PCI level anti-tamper protection, ensuring the highest security against physical and digital threats. Additionally, it supports Multi Seed Phrase functionality, which enhances security and recovery options, and includes safeguards against blind signing to protect against unauthorized transactions. The firmware also offers extensive support for a wide range of cryptocurrencies, catering to the diverse needs of crypto users.
