@@ -68,7 +68,7 @@ void SendEApduResponse(EAPDUResponsePayload_t *payload)
         g_sendFunc(packet, OFFSET_CDATA + packetDataSize + EAPDU_RESPONSE_STATUS_LENGTH);
 #else        
         if (g_clientSocket != 0) {
-            int sentBytes = send(g_clientSocket, (char*)packet, OFFSET_CDATA + packetDataSize + EAPDU_RESPONSET_STATUS_LENGTH, 0);
+            int sentBytes = send(g_clientSocket, (char*)packet, OFFSET_CDATA + packetDataSize + EAPDU_RESPONSE_STATUS_LENGTH, 0);
             printf("BY PEN: eapdu_protocol_Parser:SendEApduResponse sentBytes=%d\n", sentBytes);
         } else {
             printf("BY PEN: eapdu_protocol_parser:SendEApduResponse4 no open client socket\n");
@@ -109,7 +109,8 @@ static void free_parser()
     }
 }
 
-static void EApduRequestHandler(EAPDURequestPayload_t *request)
+// static REMOVED BY PEN
+void EApduRequestHandler(EAPDURequestPayload_t *request)
 {
     if (!request) {
         printf("Invalid request: NULL pointer\n");
