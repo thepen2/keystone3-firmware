@@ -362,6 +362,12 @@ else()
         list(REMOVE_ITEM objsrc ${excluded_files})
     endforeach()
 
+# ADDED BY PEN
+    file(GLOB_RECURSE EAPDU
+        "src/webusb_protocol/general/*.c"
+        "src/webusb_protocol/general/eapdu_services/*.c"
+    )
+    
     add_executable(${PROJECT_NAME}
         ${SIMULATOR_SRC}
         ${EXTERNAL}
@@ -372,6 +378,7 @@ else()
         ${CRYPTO}
         ${UTILS}
         ${CRYPTO_SLIP39}
+        ${EAPDU}  # ADDED BY PEN
     )
     add_dependencies(${PROJECT_NAME} rust_c)
     target_link_libraries(${PROJECT_NAME} PRIVATE SDL2 ${CMAKE_SOURCE_DIR}/ui_simulator/lib/rust-builds/librust_c.a)
