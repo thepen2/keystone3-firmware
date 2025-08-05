@@ -225,7 +225,6 @@ void * my_thread_function(void *arg) {
         printf("BY PEN: main:my_thread_function listen OK\n");
     }
 
-
     struct sockaddr_in client;
     sockletn_t clientSize = sizeof(client);
     int clientSocket;
@@ -245,11 +244,15 @@ void * my_thread_function(void *arg) {
                 toDOttedIP(client.sin_addr.s_addr, (char*)clientIP);
                 printf("  clinetIP = %s\n", (char*)clientIP);
                 int clientPort = ntohs(client.sin_port);
-              --
+                printf("  clientPort = %d\n", clientPort);
 
-
-            }
-
+                ReceiveVirtualUSB(clientSocket);
+            } 
+            close(clientSocket);
+            g_clientSocket = 0;
+        }
+    }
+    pthread_exit(NULL);  // WILL NOT BE REACHED
 }
 
 int hexstr_to_uint8_array(const char *hexstr, uint8_t *buf, size_t buf_len) {
@@ -300,6 +303,15 @@ int main(int argc, char **argv)
     //  lv_example_flex_3();
     //  lv_example_label_1();
 
+  // ADDED BY PEN, CREATE THE NEW LISTENING THREAD
+    pthread_t new_thread;
+    if (pthread_create(&new_thread, NULL, my_thread_function, NULL) != )) {
+        printf("BY PEN: main could not create thread\n");
+        return -1;
+    } else {
+        printf("BY PEN: main thread created\n");
+    }
+        
     while (1)
     {
         /* Periodically call the lv_task handler.
