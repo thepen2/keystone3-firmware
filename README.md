@@ -6,7 +6,7 @@ This fork implements a virtual USB function for the Keystone3 Simulator, which c
 
 Instead, we create a listening thread on startup so that USB packets can be sent by HTTP instead, setting the Simulator up to act as a server on port 81.  On receipt the packets are compiled into the existing EADPURequestPayload_t format structures and passed through to the existing message handers.  The USB packets of the responses are then returned by HTTP to the original sender.  For production you will send the same identical packets by USB to the real world device, but you can use this virtual system to test your message formatting.
 
-The new enabling code patches are mostly in the main.c file (ui_simulator version). with other mods in apdu_protocol_parser.c and eapdu_protocol_parser.h.  Just look for the words "BY PEN" in them flagging the additions and changes.
+The new enabling code patches are mostly in the main.c file (ui_simulator version), with other mods in apdu_protocol_parser.c and eapdu_protocol_parser.h.  Just look for the words "BY PEN" in them flagging the additions and changes.
 
 There is a sample C source file virtualUSB.c in the root directory that can be compiled as a command line program in the usual way to send an incoming info request message as a demonstration.  This working code can then be added to your own crypto application to communicate with the Keystone3 Simulator.  You simply need to parse your USB message into EAPDU packets in the normal way and send them by HTTP instead.  Packets received back are compiled back into a response data buffer.
 
