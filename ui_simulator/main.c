@@ -130,7 +130,7 @@ void ReceiveVirtualUSB(int thisSocket) {
         memcpy((uint8_t*)dataRequest + dataPos, (uint8_t*)packetBuffer + OFFSET_CDATA, thisLen - 9);
         dataPos += (thisLen - 9);
 
-        if ((thisPacketCount - thisPacketNumber > 1) {
+        if ((thisPacketCount - thisPacketNumber) > 1) {
             printf("BY PEN: main:ReceiveVirtualUSB getting more data\n");
         }
           
@@ -139,10 +139,10 @@ void ReceiveVirtualUSB(int thisSocket) {
     printf("BY PEN: mainReceiveVirtualUSB building thisRequest dataPos=%d\n", dataPos);
     EAPDURequestPayload_t *thisRequest = (EAPDURequestPayload_t *)SRAM_MALLOC(sizeof(EAPDURequestPayload_t));
     if (dataPos > 0) {
-        thisRequest->data = (uint8_t 8)dataRequest;
+        thisRequest->data = (uint8_t *)dataRequest;
     }
     thisRequest->dataLen = dataPos;
-    thisRequest->commantType = thisINS;
+    thisRequest->commandType = thisINS;
     thisRequest->requestID = thisRequestID;
 
     EApduRequestHandler(thisRequest);
@@ -152,19 +152,19 @@ void ReceiveVirtualUSB(int thisSocket) {
 }
 
 void * my_thread_function(void *arg) {
-    printf(:Hello from the new thread\n");
+    printf("Hello from the new thread\n");
 
     // GET OUR LOCAL IP ADDRESS
-        struct ifaddrs *ifaddr, *ifa
-        int family, s;
-        char host[NI_MAXHOST];
-        memset(host, 0, NI_MAXHOST);
-        if (getifaddrs(&ifaddr) == -1) {
-            printf("BY PEN: main:my_thread_function getifaddres FAILED\n");
-            pthread_exit(NULL);
-        } else {
-            printf("BY PEN: main:my_thread_function getifaddrs OK\n");
-        }
+    struct ifaddrs *ifaddr, *ifa;
+    int family, s;
+    char host[NI_MAXHOST];
+    memset(host, 0, NI_MAXHOST);
+    if (getifaddrs(&ifaddr) == -1) {
+        printf("BY PEN: main:my_thread_function getifaddres FAILED\n");
+        pthread_exit(NULL);
+    } else {
+        printf("BY PEN: main:my_thread_function getifaddrs OK\n");
+    }
         
     for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
         if (ifa->ifa_addr == NULL) {
