@@ -3,4 +3,4 @@
 
 int g_clientSocket;
 
-#endif /* _VIRTUAL_USB_H *?
+#endif /* _VIRTUAL_USB_H */
