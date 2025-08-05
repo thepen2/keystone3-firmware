@@ -1165,9 +1165,20 @@ void KbTextAreaHandler(lv_event_t * e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t *ta = lv_event_get_target(e);
-    uint8_t taLen = strlen(lv_textarea_get_text(ta));
+    // uint8_t taLen = strlen(lv_textarea_get_text(ta));
     KeyBoard_t *keyBoard = lv_event_get_user_data(e);
-    const char *currText = lv_textarea_get_text(ta);
+    // const char *currText = lv_textarea_get_text(ta);
+
+  // REPLACED BY PEN WITH
+    uint8_t taLen = 0;
+    const char *currText = "";
+    if (lv_textarea_get_text(ta) != NULL) {
+        taLen = strlen(lv_textarea_get_text(ta));
+        currText = lv_textarea_get_text(ta);
+    } else {
+        printf(“BY PEN: lv_textarea_get_text(ta) was NULL\n");
+    }
+        
     if (code == LV_EVENT_VALUE_CHANGED) {
         // Vibrate(SLIGHT);
         if (keyBoard == NULL) {
