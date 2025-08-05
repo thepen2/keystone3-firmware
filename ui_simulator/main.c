@@ -32,7 +32,7 @@
 #include <netinet/in.h>
 #include <ifaddrs.h>
 #include <eapdu_protocol_parser.h"
-#include "virtual_usb.h>  // EXTRA HEADER FILE FOUND IN ui_simulator SUB-DIRECTORY
+#include "virtual_usb.h"  // EXTRA HEADER FILE FOUND IN ui_simulator SUB-DIRECTORY
 int listening = -1;
 
 /*********************
