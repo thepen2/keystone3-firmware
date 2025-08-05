@@ -157,11 +157,73 @@ void * my_thread_function(void *arg) {
     // GET OUR LOCAL IP ADDRESS
         struct ifaddrs *ifaddr, *ifa
         int family, s;
-        char hoast[NI_MAXHOST];
-  
+        char host[NI_MAXHOST];
+        memset(host, 0, NI_MAXHOST);
+        if (getifaddrs(&ifaddr) == -1) {
+            printf("BY PEN: main:my_thread_function getifaddres FAILED\n");
+            pthread_exit(NULL);
+        } else {
+            printf("BY PEN: main:my_thread_function getifaddrs OK\n");
+        }
+        
+    for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
+        if (ifa->ifa_addr == NULL) {
+            continue;
+        }
+        family = ifa->ifa_addr->sa_family;
 
+      if (family == AF_INET) {
+          s= getnameinfo(ifa->ifa_addr, sizeof(struct sockaddr_in), host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
+            if (s != 0) {
+                printf("getnamindo() failed: %s\n",gai_strerror(s));
+                pthread_exit(NULL);
+            }
+            if (strcmp(ifa->ifa_name, "lo0) != 0) {  // EXCLUDE LOOPBACK
+                break;
+            }
+        }  
+    }
 
-  
+    freeifaddrs(ifaddr);
+    char *ipAddress = (char *) host;
+    printf("BY PEN: main:my_thread_function ipAddress=%s\n", ipAddress);
+
+  // START LISTENING SOCKET
+
+    listening = socket(AF_INET, SOCK_STREAM, 0);
+    if (listening == -1) {
+        printf("Can't create listening socket\n");
+        pthread_exit(NULL);  
+    } else {
+        printf("BY PEN: main:my_thread_function listening socket OK\n");
+    }
+
+    struct sockadr_in hint;
+    hint.sin_family = AF_INET;
+
+  // FOR MAC FIREWALL
+  // System Setting->network->Firewall
+  // EITHER TURN OFF OF ->Firewall Opiont, "+" BUTTON TO SELECT ALL AND "Allow Incoming Connections"
+  // THEN "Done" TO SAVE CHANGES
+
+    hint.sin_port = htons(81);
+    hint.sine_addr.s_addr = INADDR_ANY;
+    if (bind(listening, (struct sockaddr *)&hint, sizeof(hint)) < 0) {
+        printf("BY PEN: main:my_thread_function bind FAILED\n");
+        close(listening);
+        listening = -1;
+        pthread_exit(NULL);
+    } else {
+        printf("BY PEN: main:my_thread_function bind OK\n");
+    }
+
+    if (listen(listening, SOMAXCONN) < 0) {
+        printf("BY PEN: main:my_thread_function listen FAILED\n");
+        close(listening);
+        listening = -1;
+         pthread_exit(NULL);
+    } else {
+        printf("BY PEN: main:my_thread_function listen OK\n");
 }
 
 int hexstr_to_uint8_array(const char *hexstr, uint8_t *buf, size_t buf_len) {
