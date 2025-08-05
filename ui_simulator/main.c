@@ -23,6 +23,18 @@
 #include "gui_framework.h"
 #include "gui_views.h"
 
+// ADDED BY PEN
+#include <pthread.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <ifaddrs.h>
+#include <eapdu_protocol_parser.h"
+#include "virtual_usb.h>  // EXTRA HEADER FILE FOUND IN ui_simulator SUB-DIRECTORY
+int listening = -1;
+
 /*********************
  *      DEFINES
  *********************/
@@ -67,6 +79,91 @@ static void hal_init(void);
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
+
+//////////////////////////////
+//  FUNCTIONS ADDED BY PEN  //
+//////////////////////////////
+
+void toDottedIP(uinit32_t thisV4, char*outChars) {
+    uint8_t b0 = (uint8_t)(thisV4 & 0xff);
+    uint8_t b1 = (uint8_t)((thisV4 >> 8) & 0xff);
+    uint8_t b2 = (uint8_t)((thisV4 >> 16) & 0xff);
+    uint8_t b3 = (uint8_t)((thisV4 >> 24) & 0xff);
+    sprintf(outChars, "%d.%d.%d.%d", b0, b1, b2, b3);
+}
+
+void ReceiveVirtualUSB(int thisSocket) {
+    g_clientSocket = thisSocket;  // FROM virtual_usb.h, SAVE FOR USE IN eapdu_protocol_parser.c
+    printf("BY PEN: main:ReceiveVirtualUSB g_clientSocket=%d\n", g_clientSocket);
+
+    uint8_t dataRequest[4096];
+    uint8_t packetBuffer[64];
+    uint8_t thisCLA;
+    uint16_t thisINS;
+    uint16_t thisPacketCount;
+    uint16_t thisPacketNumber;
+    uint16_t thisRequestID;
+    uint32_t dataPos = 0;
+    uint8_t thisLen = 0;
+
+  GET_MORE_DATA:
+    thisLen - recv(thisSocket, packetBuffer, 64, 0);
+
+    if (thisLen > 0) {
+        thisCLA = packetBuffer[0];
+        
+        thisINS = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_INS):
+        printf("BY PEN: main:ReceiveVirtualUSB thisINS=%d\n", thisINS):
+          
+        thisPacketCount = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_INS):
+        printf("BY PEN: main:ReceiveVirtualUSB thisPacketCount=%d\n", thisPacketCount):
+
+        thisPacketNumber = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_P1):
+        printf("BY PEN: main:ReceiveVirtualUSB thisPacketCount=%d\n", thisPacketCount):
+
+        thisPacketNumber = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_P2):
+        printf("BY PEN: main:ReceiveVirtualUSB thisPacketNUmber=%d\n", thisPacketNumber):        
+      
+        thisRequestID = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_LC):
+        printf("BY PEN: main:ReceiveVirtualUSB thisPacketNUmber=0x%04x\n", thisRequestID): 
+
+        memcpy((uint8_t*)dataRequest + dataPos, (uint8_t*)packetBuffer + OFFSET_CDATA, thisLen - 9);
+        dataPos += (thisLen - 9);
+
+        if ((thisPacketCount - thisPacketNumber > 1) {
+            printf("BY PEN: main:ReceiveVirtualUSB getting more data\n");
+        }
+          
+    }
+              
+    printf("BY PEN: mainReceiveVirtualUSB building thisRequest dataPos=%d\n", dataPos);
+    EAPDURequestPayload_t *thisRequest = (EAPDURequestPayload_t *)SRAM_MALLOC(sizeof(EAPDURequestPayload_t));
+    if (dataPos > 0) {
+        thisRequest->data = (uint8_t 8)dataRequest;
+    }
+    thisRequest->dataLen = dataPos;
+    thisRequest->commantType = thisINS;
+    thisRequest->requestID = thisRequestID;
+
+    EApduRequestHandler(thisRequest);
+
+    SRAM_FREE(thisRequest);
+    return;
+}
+
+void * my_thread_function(void *arg) {
+    printf(:Hello from the new thread\n");
+
+    // GET OUR LOCAL IP ADDRESS
+        struct ifaddrs *ifaddr, *ifa
+        int family, s;
+        char hoast[NI_MAXHOST];
+  
+
+
+  
+}
+
 int hexstr_to_uint8_array(const char *hexstr, uint8_t *buf, size_t buf_len) {
     int count = 0;
     while (*hexstr && count < buf_len) {
