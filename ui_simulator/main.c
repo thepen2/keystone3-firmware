@@ -115,17 +115,14 @@ void ReceiveVirtualUSB(int thisSocket) {
         thisINS = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_INS);
         printf("BY PEN: main:ReceiveVirtualUSB thisINS=%d\n", thisINS);
           
-        thisPacketCount = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_INS);
-        printf("BY PEN: main:ReceiveVirtualUSB thisPacketCount=%d\n", thisPacketCount);
-
-        thisPacketNumber = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_P1);
+        thisPacketCount = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_P1);
         printf("BY PEN: main:ReceiveVirtualUSB thisPacketCount=%d\n", thisPacketCount);
 
         thisPacketNumber = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_P2);
-        printf("BY PEN: main:ReceiveVirtualUSB thisPacketNUmber=%d\n", thisPacketNumber);        
+        printf("BY PEN: main:ReceiveVirtualUSB thisPacketNumber=%d\n", thisPacketNumber);        
       
         thisRequestID = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_LC);
-        printf("BY PEN: main:ReceiveVirtualUSB thisPacketNUmber=0x%04x\n", thisRequestID);
+        printf("BY PEN: main:ReceiveVirtualUSB thisRequestID=0x%04x\n", thisRequestID);
 
         memcpy((uint8_t*)dataRequest + dataPos, (uint8_t*)packetBuffer + OFFSET_CDATA, thisLen - 9);
         dataPos += (thisLen - 9);
