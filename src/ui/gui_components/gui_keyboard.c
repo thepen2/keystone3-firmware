@@ -1176,7 +1176,7 @@ void KbTextAreaHandler(lv_event_t * e)
         taLen = strlen(lv_textarea_get_text(ta));
         currText = lv_textarea_get_text(ta);
     } else {
-        printf(“BY PEN: lv_textarea_get_text(ta) was NULL\n");
+        printf("BY PEN: lv_textarea_get_text(ta) was NULL\n");
     }
         
     if (code == LV_EVENT_VALUE_CHANGED) {
