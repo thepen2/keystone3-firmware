@@ -206,7 +206,7 @@ void * my_thread_function(void *arg) {
   // THEN "Done" TO SAVE CHANGES
 
     hint.sin_port = htons(81);
-    hint.sine_addr.s_addr = INADDR_ANY;
+    hint.sin_addr.s_addr = INADDR_ANY;
     if (bind(listening, (struct sockaddr *)&hint, sizeof(hint)) < 0) {
         printf("BY PEN: main:my_thread_function bind FAILED\n");
         close(listening);
@@ -305,7 +305,7 @@ int main(int argc, char **argv)
 
   // ADDED BY PEN, CREATE THE NEW LISTENING THREAD
     pthread_t new_thread;
-    if (pthread_create(&new_thread, NULL, my_thread_function, NULL) != )) {
+    if (pthread_create(&new_thread, NULL, my_thread_function, NULL) != 0) {
         printf("BY PEN: main could not create thread\n");
         return -1;
     } else {
