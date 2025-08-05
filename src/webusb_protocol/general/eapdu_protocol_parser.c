@@ -254,6 +254,8 @@ struct ProtocolParser *NewEApduProtocolParser()
 
 void GotoResultPage(EAPDUResultPage_t *resultPageParams)
 {
+
+#ifndef COMPILE_SIMULATOR      
     if (resultPageParams != NULL) {
         if (GuiCheckIfTopView(&g_USBTransportView)) {
             return;
@@ -264,4 +266,5 @@ void GotoResultPage(EAPDUResultPage_t *resultPageParams)
             PubBufferMsg(UI_MSG_USB_TRANSPORT_VIEW, resultPageParams, sizeof(EAPDUResultPage_t));
         }
     }
+#endif    
 }
