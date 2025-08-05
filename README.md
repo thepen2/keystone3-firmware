@@ -6,13 +6,15 @@ This fork implements a virtual USB function for the Keystone3 Simulator, which c
 
 Instead, we create a listening thread on startup so that USB packets can be sent by HTTP instead, setting the Simulator up to act as a server on port 81.  On receipt the packets are compiled into the existing EADPURequestPayload_t format structures and passed through to the existing message handers.  The USB packets of the responses are then returned by HTTP to the original sender.  For production you will send the same identical packets by USB to the real world device, but you can use this virtual system to test your message formatting.
 
-Most of the additional code has been added to the main.c (ui_simulator version) and eapdu_protocol_parser.c files.  There is a sample C source file virtualUSB.c in the root directory that can be compiled as a command line program in the usual way, and as annotated in the new program file to send an info request message as a demonstration.  This working code can then be added to your own crypto application to communicate with the Keystone3 Simulator.  You simply need to parse your USB message into EAPDU packets in the normal way and send them by HTTP instead.  Packets received back are compiled back into a response data buffer.
+The new enabling code patches are mostly in the main.c file, (ui_simulator version). with other mods in apdu_protocol_parser.c and eapdu_protocol_parser.h.  Just look for the words "BY PEN" in them flagging the additions and changes.
+
+There is a sample C source file virtualUSB.c in the root directory that can be compiled as a command line program in the usual way to send an incoming info request message as a demonstration.  This working code can then be added to your own crypto application to communicate with the Keystone3 Simulator.  You simply need to parse your USB message into EAPDU packets in the normal way and send them by HTTP instead.  Packets received back are compiled back into a response data buffer.
 
 The pretty part of this solution is that it is any computer running your crypto app can exchange such messages with a Keystone3 Simulator regardless of operating system, or can be run in separate terminal windows on the same computer.  Be aware that you may need to enable port forwarding and/or make sure the socket traffic is not blocked by a firewall.  The choice of port 81 is arbitrary.  Any other port could be used if the number is swapped both in the main.c file and the virtualUSB.c file.
 
-In addition we have applied some additional fixes that seemed to be causing problems in the compile.  To find them all, search for the words "BY PEN" in the archive.  The explanation for these other fixes can be found in the original https://github.com/KeystoneHQ/keystone3-firmware/issues archive under Issues 1777 and 1781.
+In addition we have applied some additional fixes that seemed to be causing problems in the compile.  To find them all, again search for the words "BY PEN" in the archive.  The explanation for these other fixes can be found in the original https://github.com/KeystoneHQ/keystone3-firmware/issues archive under Issues 1777 and 1781.
 
-
+PLEASE NOTE: If you just want to compile this archive as is, beware that Keystond set the /external/ctaes directory up as a sympbolic link, and depending on how you download it it may show up empty at your end.  In this case you will need to download ctaes.c and ctaes.h separately and them in there.
 
 ## Description
 
