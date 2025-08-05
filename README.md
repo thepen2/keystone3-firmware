@@ -10,7 +10,7 @@ Most of the additional code has been added to the main.c (ui_simulator version) 
 
 The pretty part of this solution is that it is any computer running your crypto app can exchange such messages with a Keystone3 Simulator regardless of operating system, or can be run in separate terminal windows on the same computer.  Be aware that you may need to enable port forwarding and/or make sure the socket traffic is not blocked by a firewall.  The choice of port 81 is arbitrary.  Any other port could be used if the number is swapped both in the main.c file and the virtualUSB.c file.
 
-In addition we have applied some additonal fixes that seemed to be causing problems in the compile.  To find them all, search for the words "BY PEN" in the archive.  The explanation for these other fixes can be found in the original KeystoneHQ/Keystone3-firmware archive under Issues 1777 and 1781.
+In addition we have applied some additional fixes that seemed to be causing problems in the compile.  To find them all, search for the words "BY PEN" in the archive.  The explanation for these other fixes can be found in the original KeystoneHQ/Keystone3-firmware archive under Issues 1777 and 1781.
 
 
 
