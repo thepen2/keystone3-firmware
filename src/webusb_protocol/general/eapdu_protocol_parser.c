@@ -15,6 +15,10 @@
 #include "eapdu_services/service_trans_usb_pubkey.h"
 #include "eapdu_services/service_get_device_info.h"
 
+// ADDED BY PEN
+#include "virtual_usb.h"
+#include <sys/socket.h>
+
 static ProtocolSendCallbackFunc_t g_sendFunc = NULL;
 static struct ProtocolParser *global_parser = NULL;
 
@@ -24,7 +28,9 @@ static struct ProtocolParser *global_parser = NULL;
 #define MAX_EAPDU_DATA_SIZE (MAX_PACKETS_LENGTH - OFFSET_CDATA)
 #define MAX_EAPDU_RESPONSE_DATA_SIZE (MAX_PACKETS_LENGTH - OFFSET_CDATA - EAPDU_RESPONSE_STATUS_LENGTH)
 
-static uint8_t g_protocolRcvBuffer[MAX_PACKETS][MAX_PACKETS_LENGTH] __attribute__((section(".data_parser_section")));
+// ATTRIBUTE FIXED BY PEN
+static uint8_t g_protocolRcvBuffer[MAX_PACKETS][MAX_PACKETS_LENGTH] __attribute__((section("__TEXT,.data_parser_sec")));
+// static uint8_t g_protocolRcvBuffer[MAX_PACKETS][MAX_PACKETS_LENGTH] __attribute__((section(".data_parser_section")));
 static uint8_t g_packetLengths[MAX_PACKETS];
 static uint8_t g_receivedPackets[MAX_PACKETS];
 static uint8_t g_totalPackets = 0;
@@ -56,7 +62,18 @@ void SendEApduResponse(EAPDUResponsePayload_t *payload)
         insert_16bit_value(packet, OFFSET_LC, payload->requestID);
         memcpy_s(packet + OFFSET_CDATA, MAX_PACKETS_LENGTH - OFFSET_CDATA, payload->data + offset, packetDataSize);
         insert_16bit_value(packet, OFFSET_CDATA + packetDataSize, payload->status);
+
+      // FORKED BY PEN
+#ifndef COMPILE_SIMULATOR        
         g_sendFunc(packet, OFFSET_CDATA + packetDataSize + EAPDU_RESPONSE_STATUS_LENGTH);
+#else        
+        if (g_clientSocket != 0) {
+            int sentBytes = send(g_clientSocket, (char*)packet, OFFSET_CDATA + packetDataSize + EAPDU_RESPONSET_STATUS_LENGTH, 0);
+            printf("BY PEN: eapdu_protocol_Parser:SendEApduResponse sentBytes=%d\n", sentBytes);
+        } else {
+            printf("BY PEN: eapdu_protocol_parser:SendEApduResponse4 no open client socket\n");
+        }
+#endif        
         offset += packetDataSize;
         payload->dataLen -= packetDataSize;
         packetIndex++;
