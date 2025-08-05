@@ -6,7 +6,9 @@
 #include "stddef.h"
 
 // ADDED BY PEN
+#ifdef COMPILE_SIMULATOR
 #include <string.h>  // FIXED CONFLICTING memset DEFINITION
+#endif
 
 void *SramMallocTrack(size_t size, const char *file, int line, const char *func);
 void SramFreeTrack(void *p, const char *file, int line, const char *func);
