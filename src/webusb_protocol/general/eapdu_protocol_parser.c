@@ -18,6 +18,7 @@
 // ADDED BY PEN
 #include "virtual_usb.h"
 #include <sys/socket.h>
+// END INCLUDES ADDED BY PEN
 
 static ProtocolSendCallbackFunc_t g_sendFunc = NULL;
 static struct ProtocolParser *global_parser = NULL;
@@ -73,7 +74,9 @@ void SendEApduResponse(EAPDUResponsePayload_t *payload)
         } else {
             printf("BY PEN: eapdu_protocol_parser:SendEApduResponse4 no open client socket\n");
         }
-#endif        
+#endif 
+      // EMD FORK BY PEN
+        
         offset += packetDataSize;
         payload->dataLen -= packetDataSize;
         packetIndex++;
@@ -256,6 +259,7 @@ struct ProtocolParser *NewEApduProtocolParser()
 void GotoResultPage(EAPDUResultPage_t *resultPageParams)
 {
 
+  // LIMITATION TO EXCLUDE FOR SIMULATOR BY PEN
 #ifndef COMPILE_SIMULATOR      
     if (resultPageParams != NULL) {
         if (GuiCheckIfTopView(&g_USBTransportView)) {
@@ -267,5 +271,7 @@ void GotoResultPage(EAPDUResultPage_t *resultPageParams)
             PubBufferMsg(UI_MSG_USB_TRANSPORT_VIEW, resultPageParams, sizeof(EAPDUResultPage_t));
         }
     }
-#endif    
+#endif   
+  // END LIMITATION BY PEN
+    
 }
