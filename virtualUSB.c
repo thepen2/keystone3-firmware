@@ -77,8 +77,6 @@ int main() {
         printf("remoteIPAddr = %s\n", (char*)remoteIPAddr);
     }
     
-
-    
     int thisSocket;
     struct sockaddr_in local_addr;
     memset(&local_addr, 0, sizeof(local_addr));
