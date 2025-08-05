@@ -178,7 +178,7 @@ void * my_thread_function(void *arg) {
                 printf("getnamindo() failed: %s\n",gai_strerror(s));
                 pthread_exit(NULL);
             }
-            if (strcmp(ifa->ifa_name, "lo0) != 0) {  // EXCLUDE LOOPBACK
+            if (strcmp(ifa->ifa_name, "lo0") != 0) {  // EXCLUDE LOOPBACK
                 break;
             }
         }  
@@ -197,7 +197,7 @@ void * my_thread_function(void *arg) {
         printf("BY PEN: main:my_thread_function listening socket OK\n");
     }
 
-    struct sockadr_in hint;
+    struct sockaddr_in hint;
     hint.sin_family = AF_INET;
 
   // FOR MAC FIREWALL
@@ -226,22 +226,22 @@ void * my_thread_function(void *arg) {
     }
 
     struct sockaddr_in client;
-    sockletn_t clientSize = sizeof(client);
+    socklen_t clientSize = sizeof(client);
     int clientSocket;
 
     while(1) {
-        clientSocket = accept(listening, (struc sockaddr *)&client, &clientSize);
+        clientSocket = accept(listening, (struct sockaddr *)&client, &clientSize);
         if (clientSocket == -1) {
-            print("Error accepting client connection.\n");
+            printf("Error accepting client connection.\n");
         } else {
             char host[NI_MAXHOST];  // Client's remote name
             char service[NI_MAXSERV];  // Port (service) the client is connected to
-            char* clientIP[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            char* clientIP[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             memset(host, 0, NI_MAXHOST);
             memset(service, 0, NI_MAXSERV);
             if (getnameinfo((struct sockaddr *)&client, sizeof(client), host, NI_MAXHOST, service, NI_MAXSERV, 0) == 0) {
                 printf("  Connection from host = %s\n", (char*)host);
-                toDOttedIP(client.sin_addr.s_addr, (char*)clientIP);
+                toDottedIP(client.sin_addr.s_addr, (char*)clientIP);
                 printf("  clinetIP = %s\n", (char*)clientIP);
                 int clientPort = ntohs(client.sin_port);
                 printf("  clientPort = %d\n", clientPort);
