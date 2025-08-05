@@ -34,7 +34,9 @@
 static void DataParserTask(void *argument);
 void USBD_cdc_SendBuffer_Cb(const uint8_t *data, uint32_t len);
 
-static uint8_t g_dataParserCache[PARSER_CACHE_LEN] __attribute__((section(".data_parser_section")));
+// FIXED BY PEN
+static uint8_t g_dataParserCache[PARSER_CACHE_LEN] __attribute__((section("__TEST,.data_parser_sec")));
+// static uint8_t g_dataParserCache[PARSER_CACHE_LEN] __attribute__((section(".data_parser_section")));
 static cbuf_handle_t g_cBufHandle;
 static uint8_t g_dataParserPubKey[PUB_KEY_SIZE] = {0};
 static uint8_t g_dataSharedKey[PRIV_KEY_SIZE] = {0};
