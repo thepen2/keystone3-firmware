@@ -34,6 +34,7 @@
 #include "eapdu_protocol_parser.h"
 #include "virtual_usb.h"  // EXTRA HEADER FILE FOUND IN ui_simulator SUB-DIRECTORY
 int listening = -1;
+// END INCLUDES ADDED BY PEN
 
 /*********************
  *      DEFINES
@@ -251,6 +252,7 @@ void * my_thread_function(void *arg) {
     }
     pthread_exit(NULL);  // WILL NOT BE REACHED
 }
+// EMD ADDED FUNCTIONS BY PEN
 
 int hexstr_to_uint8_array(const char *hexstr, uint8_t *buf, size_t buf_len) {
     int count = 0;
@@ -308,6 +310,7 @@ int main(int argc, char **argv)
     } else {
         printf("BY PEN: main thread created\n");
     }
+  // EMD MEW THREAD INIT ADDED BY PEN
         
     while (1)
     {
