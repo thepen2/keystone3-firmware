@@ -84,7 +84,7 @@ static void hal_init(void);
 //  FUNCTIONS ADDED BY PEN  //
 //////////////////////////////
 
-void toDottedIP(uinit32_t thisV4, char*outChars) {
+void toDottedIP(uint32_t thisV4, char*outChars) {
     uint8_t b0 = (uint8_t)(thisV4 & 0xff);
     uint8_t b1 = (uint8_t)((thisV4 >> 8) & 0xff);
     uint8_t b2 = (uint8_t)((thisV4 >> 16) & 0xff);
@@ -112,20 +112,20 @@ void ReceiveVirtualUSB(int thisSocket) {
     if (thisLen > 0) {
         thisCLA = packetBuffer[0];
         
-        thisINS = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_INS):
-        printf("BY PEN: main:ReceiveVirtualUSB thisINS=%d\n", thisINS):
+        thisINS = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_INS);
+        printf("BY PEN: main:ReceiveVirtualUSB thisINS=%d\n", thisINS);
           
-        thisPacketCount = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_INS):
-        printf("BY PEN: main:ReceiveVirtualUSB thisPacketCount=%d\n", thisPacketCount):
+        thisPacketCount = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_INS);
+        printf("BY PEN: main:ReceiveVirtualUSB thisPacketCount=%d\n", thisPacketCount);
 
-        thisPacketNumber = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_P1):
-        printf("BY PEN: main:ReceiveVirtualUSB thisPacketCount=%d\n", thisPacketCount):
+        thisPacketNumber = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_P1);
+        printf("BY PEN: main:ReceiveVirtualUSB thisPacketCount=%d\n", thisPacketCount);
 
-        thisPacketNumber = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_P2):
-        printf("BY PEN: main:ReceiveVirtualUSB thisPacketNUmber=%d\n", thisPacketNumber):        
+        thisPacketNumber = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_P2);
+        printf("BY PEN: main:ReceiveVirtualUSB thisPacketNUmber=%d\n", thisPacketNumber);        
       
-        thisRequestID = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_LC):
-        printf("BY PEN: main:ReceiveVirtualUSB thisPacketNUmber=0x%04x\n", thisRequestID): 
+        thisRequestID = extract_16bit_value((uint8_t*)packetBuffer, OFFSET_LC);
+        printf("BY PEN: main:ReceiveVirtualUSB thisPacketNUmber=0x%04x\n", thisRequestID);
 
         memcpy((uint8_t*)dataRequest + dataPos, (uint8_t*)packetBuffer + OFFSET_CDATA, thisLen - 9);
         dataPos += (thisLen - 9);
