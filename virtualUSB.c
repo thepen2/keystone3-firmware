@@ -2,8 +2,8 @@
 // THIS COMMAND LINE PROBRAM WILL SEND AN INFO REQUEST TO A KEYSTONE3 SIMULATOR OVER HTTP
 // FILL IN THE IP ADDRESS OF THE COMPUTER RUNNING THE SIMULATOR AS THE remoteIPAddr BELOW
 
-// TO IMPLEMENT COMMANDS THAT WOULD TAKE MORE THAN 1 USB PACKET, SEND THE SAME PACKETS WITH SUCCESSIVE send() OPERATIONS
-// COMPILE WITH clang virtualUSB.c -o testUSB, OR USE YOU CAN USE gcc DIRECTLY OR ANY OTHER AS YOUR C COMPILER
+// TO IMPLEMENT COMMANDS THAT WOULD TAKE MORE THAN 1 USB PACKET, SEND THE PACKETS WITH SUCCESSIVE send() OPERATIONS
+// COMPILE WITH clang virtualUSB.c -o testUSB, OR YOU CAN USE gcc DIRECTLY OR ANY OTHER C COMPILER
 // RUN WITH ./testUSB ON MAC/UNIX FROM A COMMAND LINE ONCE THE SIMULATOR IS RUNNING, OR JUST testUSB ON WINDOWS
 
 
@@ -66,11 +66,11 @@ int main() {
     char *localIPAddr = (char *) host;
     printf("localIPAddr = %s\n", localIPAddr);
     
-    char* remoteIPAddr = "192.168.99.254";
-  //  char* remoteIPAddr = "111.222.333.444";
+  // char* remoteIPAddr = "192.168.99.254";
+    char* remoteIPAddr = "111.222.333.444";
     
     if (strcmp((char*)remoteIPAddr, "111.222.333.444") == 0) {
-        printf("You must fill in the public address of the computer running the Keystone3 simulator\nThen compile this program again\n");
+        printf("You must fill in the ip address of the computer running the Keystone3 simulator\nThen compile this program again\n");
         return -1;
     }
     else {
@@ -82,9 +82,7 @@ int main() {
     memset(&local_addr, 0, sizeof(local_addr));
     
     local_addr.sin_family = AF_INET;
-//    inet_pton(AF_INET, (char*)ipAddress, &(local_addr.sin_addr.s_addr));
     inet_pton(AF_INET, (char*)localIPAddr, &(local_addr.sin_addr.s_addr));
-//    inet_pton(AF_INET, (char*)remoteIPAddr, &(local_addr.sin_addr.s_addr));
     local_addr.sin_port = htons(0);  // ANY PORT
     
     thisSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -136,8 +134,8 @@ int main() {
     
     keystonePacket[7] = 0x01;  // REQUEST ID
     keystonePacket[8] = 0x23;
-    
-    // NO DATA OUTGOING DATA FILES FOER THIS ONE
+
+    // NO DATA OUTGOING DATA FIELD FOER THIS ONE
     
     uint32_t recvBytes = 0;
     uint32_t totalDataLength = 0;
@@ -146,7 +144,7 @@ int main() {
     inet_pton(AF_INET, (char*)remoteIPAddr, &(keystone3_addr.sin_addr.s_addr));
     keystone3_addr.sin_port = htons(81);  // COULD BE ANYTHING REALLY THAT MATCHES THE SIMULATOR SETTING, BUT BEST <1024
     
-    struct sockaddr_in sin;  // JUST FOR CHECKING OUT OUTGOING IP ADDRESS AND PORT
+    struct sockaddr_in sin;  // JUST FOR CHECKING OUR OUTGOING IP ADDRESS AND PORT
     socklen_t len = sizeof(sin);
     
     // RECHECK ASSIGNED LOCAL IP ADDRESS AND PORT
@@ -163,7 +161,8 @@ int main() {
     
     printf("trying to connect to Keystone3 simulator (timeout about 60 seconds)\n");
     printf("for faster timeout verdict implement non-blocking socket and select()\n");
-    
+
+    // IF THE SIMULATOR IS RUNNING AND YOU HAVE THE RIGHT REMOTE IP ADDRESS RESPONSE WILL BE FAST
     // IF CONNECTION FAILS WILL TIME OUT IN ABOUT 60 SECONDS
     // FOR FASTER VERDICT IMPLEMENT NON-BLOCKING SOCKET AND select(), THEN BLOCK SOCKET AGAIN AFTER RESPONSE
     
@@ -174,7 +173,6 @@ int main() {
     }
     else {
         printf("connected to Keystone3 simulator\n");
-
     }
     
     char responseData[65536];
