@@ -189,7 +189,6 @@ void * my_thread_function(void *arg) {
     printf("BY PEN: main:my_thread_function ipAddress=%s\n", ipAddress);
 
   // START LISTENING SOCKET
-
     listening = socket(AF_INET, SOCK_STREAM, 0);
     if (listening == -1) {
         printf("Can't create listening socket\n");
@@ -224,6 +223,33 @@ void * my_thread_function(void *arg) {
          pthread_exit(NULL);
     } else {
         printf("BY PEN: main:my_thread_function listen OK\n");
+    }
+
+
+    struct sockaddr_in client;
+    sockletn_t clientSize = sizeof(client);
+    int clientSocket;
+
+    while(1) {
+        clientSocket = accept(listening, (struc sockaddr *)&client, &clientSize);
+        if (clientSocket == -1) {
+            print("Error accepting client connection.\n");
+        } else {
+            char host[NI_MAXHOST];  // Client's remote name
+            char service[NI_MAXSERV];  // Port (service) the client is connected to
+            char* clientIP[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            memset(host, 0, NI_MAXHOST);
+            memset(service, 0, NI_MAXSERV);
+            if (getnameinfo((struct sockaddr *)&client, sizeof(client), host, NI_MAXHOST, service, NI_MAXSERV, 0) == 0) {
+                printf("  Connection from host = %s\n", (char*)host);
+                toDOttedIP(client.sin_addr.s_addr, (char*)clientIP);
+                printf("  clinetIP = %s\n", (char*)clientIP);
+                int clientPort = ntohs(client.sin_port);
+              --
+
+
+            }
+
 }
 
 int hexstr_to_uint8_array(const char *hexstr, uint8_t *buf, size_t buf_len) {
