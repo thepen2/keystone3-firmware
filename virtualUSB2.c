@@ -78,11 +78,12 @@ int main() {
     
     // OTHERWISE THE remoteIPAddr SHOULB BE THE LOCAL IP ADDRESS OF THE SAME COMPUTER IF YOU ARE ON DHCP
     // WHICH WILL BE SOMETHING LIKE 192.168.xxx.xxx, OR YOUR PUBLIC IP ADDRRESS IF YOU HAVE A STATIC IP ADDRESS
+
+    // REMOTE IP ADDRESS
+    char* remoteIPAddr = "xxx.xxx.xxx.xxx";
     
-    char* remoteIPAddr = "111.222.333.444";
-    
-    if (strcmp((char*)remoteIPAddr, "111.222.333.444") == 0) {
-        printf("You must fill in the ip address of the computer running the Keystone3 simulator\nThen compile this program again\n");
+    if (strcmp((char*)remoteIPAddr, "xxx.xxx.xxx.xxx") == 0) {
+        printf("You must fill in the remote ip address of the computer running the Keystone3 Simulator\nThen compile this program again\n");
         return -1;
     }
     else {
