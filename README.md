@@ -2,7 +2,7 @@
 
 ## Virtual USB Handler Add On
 
-This fork implements a virtual USB function for the Keystone3 Simulator, which currently does not support USB messages, which we suspect would require a custom driver, system by system.
+This fork implements a virtual USB function for the Keystone3 Simulator, which currently does not support USB messages, and which we suspect would require a custom driver, system by system.
 
 Instead, we create a listening thread on startup so that USB packets can be sent by HTTP, setting the Simulator up to act as a server on port 81.  On receipt the packets are compiled into the existing EADPURequestPayload_t format structures and passed through to the existing message handers.  The USB packets of the responses are then returned by HTTP to the original sender.  For production you will send the same identical packets by USB to the real world device, but you can use this virtual system to test your message formatting.
 
