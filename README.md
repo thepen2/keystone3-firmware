@@ -14,7 +14,7 @@ The pretty part of this solution is that it is any computer running your crypto 
 
 In addition we have applied some additional fixes that seemed to be causing problems in the compile.  To find them all, again search for the words "BY PEN" in the archive.  The explanation for these other fixes can be found in the original https://github.com/KeystoneHQ/keystone3-firmware/issues archive under Issues 1777 and 1781.
 
-PLEASE NOTE: If you just want to compile this archive as is, beware that Keystone set the /external/ctaes directory up as a sympbolic link, and depending on how you download it it may show up empty at your end.  In this case you will need to download ctaes.c and ctaes.h separately and drop them in there.
+PLEASE NOTE: If you just want to compile this archive as is, beware that Keystone set the /external/ctaes directory up as a sympbolic link, and depending on how you download it, it may show up empty at your end.  In this case you will need to download ctaes.c and ctaes.h separately and drop them in there.
 
 ## Description
 
