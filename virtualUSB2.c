@@ -160,7 +160,7 @@ int main() {
     struct sockaddr_in sin;  // JUST FOR CHECKING OUR OUTGOING IP ADDRESS AND PORT
     socklen_t len = sizeof(sin);
     
-    // RECHECK ASSIGNED LOCAL IP ADDRESS AND PORT
+    // RECHECK ASSIGNED IP ADDRESS AND PORT
     if (getsockname(thisSocket, (struct sockaddr *)&sin, &len) == -1) {
         printf("getsockname() failed\n");
         close(thisSocket);
