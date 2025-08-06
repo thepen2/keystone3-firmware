@@ -157,7 +157,7 @@ int main() {
     inet_pton(AF_INET, (char*)remoteIPAddr, &(keystone3_addr.sin_addr.s_addr));
     keystone3_addr.sin_port = htons(81);  // COULD BE ANYTHING REALLY THAT MATCHES THE SIMULATOR SETTING, BUT BEST <1024
     
-    struct sockaddr_in sin;  // JUST FOR CHECKING OUT OUTGOING IP ADDRESS AND PORT
+    struct sockaddr_in sin;  // JUST FOR CHECKING OUR OUTGOING IP ADDRESS AND PORT
     socklen_t len = sizeof(sin);
     
     // RECHECK ASSIGNED LOCAL IP ADDRESS AND PORT
