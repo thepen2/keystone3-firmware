@@ -82,7 +82,7 @@ int main() {
     char* remoteIPAddr = "111.222.333.444";
     
     if (strcmp((char*)remoteIPAddr, "111.222.333.444") == 0) {
-        printf("You must fill in the public address of the computer running the Keystone3 simulator\nThen compile this program again\n");
+        printf("You must fill in the ip address of the computer running the Keystone3 simulator\nThen compile this program again\n");
         return -1;
     }
     else {
