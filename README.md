@@ -12,7 +12,7 @@ There is a sample C source file virtualUSB2.c in the root directory that can be 
 
 The pretty part of this solution is that it is any computer running your crypto app can exchange such messages with a Keystone3 Simulator regardless of operating system, or can be run in separate terminal windows on the same computer.  You will generaly need to enable port forwarding and/or make sure the socket traffic is not blocked by a firewall.  The choice of port 81 is arbitrary.  Any other port could be used if the number is swapped both in the main.c file and the virtualUSB.c file.
 
-In addition we have applied some additional fixes that seemed to be causing problems in the compile.  To find them all, again search for the words "BY PEN" in the archive.  The explanation for these other fixes can be found in the original https://github.com/KeystoneHQ/keystone3-firmware/issues archive under Issues 1777 and 1781.
+In addition we have applied some additional fixes of minor bugs that seemed to be causing problems in the compile.  To find them all, again search for the words "BY PEN" in the archive.  The explanation for these other fixes can be found in the original https://github.com/KeystoneHQ/keystone3-firmware/issues archive under Issues 1777 and 1781.
 
 PLEASE NOTE: If you just want to compile this archive as is, beware that Keystone set the /external/ctaes directory up as a symbolic link, and depending on how you download the repository, it may show up empty at your end.  In this case you will need to download ctaes.c and ctaes.h separately and drop them in there.
 
