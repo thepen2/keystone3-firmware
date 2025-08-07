@@ -29,7 +29,6 @@ int main() {
 //    printf("Compiling as C\n");
 // #endif
     
-
     // THE localIPAddr WILL BE AUTOMATICALY SET BY THIS PROGRAM
     
     // GET OUR LOCAL IP ADDRESS
